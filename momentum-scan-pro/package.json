@@ -1,0 +1,13 @@
+{
+  "name": "momentum-scan-pro",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MomentumScan Pro — server-side scored momentum screener with daily persistence and adaptive weighting.",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
