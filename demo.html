@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MomentumScan Pro — Demo</title>
+<style>
+  :root{
+    --bg:#0b1020; --panel:#131a2e; --line:#26304a; --text:#e8edf7; --dim:#93a0bd;
+    --accent:#4f7cff; --accent2:#22d3a5;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;
+    background:radial-gradient(1200px 600px at 20% -10%,#16203c 0,var(--bg) 60%);
+    color:var(--text);min-height:100vh;padding:24px;font-size:14px}
+  .wrap{max-width:1180px;margin:0 auto}
+  .banner{background:linear-gradient(90deg,rgba(245,165,36,.16),rgba(245,165,36,.05));
+    border:1px solid rgba(245,165,36,.4);color:#f6be5c;border-radius:10px;
+    padding:10px 14px;font-size:12.5px;margin-bottom:18px;font-weight:600}
+  header{display:flex;align-items:center;gap:14px;margin-bottom:6px;flex-wrap:wrap}
+  .logo{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--accent),#2b4bd6);font-weight:800;font-size:18px}
+  h1{font-size:20px;font-weight:800;letter-spacing:-.02em}
+  .tag{font-size:12px;color:var(--dim)}
+  .sub{color:var(--dim);font-size:12.5px;margin:2px 0 18px}
+  .bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+  input{flex:1;min-width:220px;background:var(--panel);border:1px solid var(--line);
+    color:var(--text);border-radius:10px;padding:12px 14px;font-size:14px;outline:none}
+  button{background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:12px 20px;font-weight:700;font-size:14px;cursor:pointer}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin:0 2px 6px;font-size:11px;color:var(--dim)}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:middle}
+  table{width:100%;border-collapse:collapse;margin-top:8px}
+  th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;
+    color:var(--dim);padding:10px 12px;border-bottom:1px solid var(--line)}
+  td{padding:12px;border-bottom:1px solid var(--line);font-size:13.5px;vertical-align:middle}
+  tr:hover td{background:var(--panel)}
+  .tk{font-weight:800;font-size:15px}
+  .prob{font-weight:800;font-size:16px}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}
+  .sg-breakout{background:rgba(79,124,255,.16);color:#8fb0ff}
+  .sg-strong{background:rgba(34,197,94,.15);color:#5fe08a}
+  .sg-watch{background:rgba(245,165,36,.15);color:#f6be5c}
+  .sg-weak{background:rgba(147,160,189,.12);color:var(--dim)}
+  .bars{display:flex;gap:3px;align-items:flex-end;height:26px}
+  .b{width:8px;border-radius:2px 2px 0 0;background:var(--accent);opacity:.85}
+  .b.momentum{background:#22d3a5}.b.volume{background:#f5a524}.b.position{background:#a78bfa}.b.news{background:#64748b}
+  .lv{font-size:12px;color:var(--dim)}.lv b{color:var(--text)}
+  .rr{font-size:11px;color:var(--accent2);font-weight:700}
+  .foot{margin-top:22px;font-size:11px;color:var(--dim);line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="banner">⚠︎ DEMO MODE — this is baked-in sample data so you can see the interface with zero setup. The real app computes these live from market data. Not investment advice.</div>
+  <header>
+    <div class="logo">M</div>
+    <div>
+      <h1>MomentumScan Pro</h1>
+      <div class="tag">Swing model · calibrated probabilities · sample data</div>
+    </div>
+  </header>
+  <div class="sub">Each row shows the model's <b>probability of a &gt;2% move over ~5 days</b>, the pillar breakdown behind it, and ATR-based entry/target/stop.</div>
+
+  <div class="bar">
+    <input id="tickers" value="NVDA, AMD, PLTR, RKLB, ASTS…" readonly>
+    <button onclick="alert('Demo mode — the live version fetches real data via your API key. See PREDICTIVE_README.md to run it for real.')">Scan</button>
+  </div>
+  <div class="legend">
+    <span><span class="dot" style="background:#4f7cff"></span>Trend</span>
+    <span><span class="dot" style="background:#22d3a5"></span>Momentum</span>
+    <span><span class="dot" style="background:#f5a524"></span>Volume</span>
+    <span><span class="dot" style="background:#a78bfa"></span>Position</span>
+    <span><span class="dot" style="background:#64748b"></span>News</span>
+  </div>
+
+  <table>
+    <thead><tr>
+      <th>Ticker</th><th>Price</th><th>Chg</th><th>Prob ↑</th>
+      <th>Pillars</th><th>Signal</th><th>RSI</th><th>Entry / Target / Stop</th>
+    </tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+
+  <div class="foot">
+    Sample data for interface preview only. To generate real predictions, run the Python
+    layer with your Twelve Data key — see PREDICTIVE_README.md. Nothing here is investment advice.
+  </div>
+</div>
+
+<script>
+// baked sample data — illustrative, not live
+const SAMPLE = [
+  {t:"NVDA", price:184.20, chg:2.4, prob:0.71, pillars:{trend:96,momentum:78,volume:88,position:92,news:60}, sig:"breakout", rsi:64.2, entry:184.2, target:197.6, stop:176.1},
+  {t:"RKLB", price:31.85, chg:4.1, prob:0.68, pillars:{trend:90,momentum:82,volume:95,position:88,news:55}, sig:"breakout", rsi:67.8, entry:31.85, target:35.9, stop:29.4},
+  {t:"AVGO", price:242.10, chg:1.3, prob:0.63, pillars:{trend:88,momentum:70,volume:62,position:78,news:58}, sig:"strong", rsi:61.0, entry:242.1, target:258.0, stop:232.5},
+  {t:"PLTR", price:58.40, chg:1.9, prob:0.61, pillars:{trend:84,momentum:74,volume:71,position:82,news:66}, sig:"strong", rsi:63.5, entry:58.4, target:63.2, stop:55.3},
+  {t:"ASTS", price:38.90, chg:5.2, prob:0.59, pillars:{trend:80,momentum:85,volume:98,position:76,news:50}, sig:"strong", rsi:71.2, entry:38.9, target:44.1, stop:35.4},
+  {t:"AMD",  price:172.30, chg:0.8, prob:0.54, pillars:{trend:72,momentum:64,volume:55,position:70,news:52}, sig:"watch", rsi:57.9, entry:172.3, target:183.0, stop:165.2},
+  {t:"MU",   price:118.75, chg:-0.4, prob:0.49, pillars:{trend:66,momentum:58,volume:48,position:62,news:50}, sig:"watch", rsi:54.1, entry:118.75, target:126.0, stop:113.1},
+  {t:"IONQ", price:44.10, chg:-1.2, prob:0.42, pillars:{trend:52,momentum:46,volume:60,position:44,news:48}, sig:"watch", rsi:48.3, entry:44.1, target:48.5, stop:41.0},
+  {t:"OKLO", price:71.20, chg:-2.6, prob:0.34, pillars:{trend:40,momentum:38,volume:44,position:36,news:45}, sig:"weak", rsi:42.7, entry:71.2, target:77.0, stop:66.5},
+  {t:"SOFI", price:15.40, chg:-1.8, prob:0.28, pillars:{trend:30,momentum:32,volume:38,position:28,news:50}, sig:"weak", rsi:39.5, entry:15.4, target:16.9, stop:14.3},
+];
+function bars(p){
+  return '<div class="bars">'+['trend','momentum','volume','position','news'].map(k=>{
+    const h=Math.max(2,Math.round((p[k]||0)/100*26));
+    return `<div class="b ${k}" style="height:${h}px" title="${k}: ${p[k]}"></div>`;
+  }).join('')+'</div>';
+}
+const pc = s=> s>=0.6?'#5fe08a':s>=0.45?'#f6be5c':'#f78d8d';
+document.getElementById('rows').innerHTML = SAMPLE.map(r=>{
+  const rr=((r.target-r.entry)/(r.entry-r.stop)).toFixed(2);
+  const chgCol=r.chg>0?'#5fe08a':r.chg<0?'#f78d8d':'var(--dim)';
+  return `<tr>
+    <td><span class="tk">${r.t}</span></td>
+    <td>$${r.price.toFixed(2)}</td>
+    <td style="color:${chgCol}">${r.chg>0?'+':''}${r.chg}%</td>
+    <td><span class="prob" style="color:${pc(r.prob)}">${Math.round(r.prob*100)}%</span></td>
+    <td>${bars(r.pillars)}</td>
+    <td><span class="pill sg-${r.sig}">${r.sig}</span></td>
+    <td>${r.rsi}</td>
+    <td class="lv">E <b>$${r.entry.toFixed(2)}</b> · T <b>$${r.target.toFixed(2)}</b> · S <b>$${r.stop.toFixed(2)}</b> <span class="rr">R:R ${rr}</span></td>
+  </tr>`;
+}).join('');
+</script>
+</body>
+</html>
