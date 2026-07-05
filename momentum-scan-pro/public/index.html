@@ -8,32 +8,40 @@
   :root{--bg:#0b1020;--panel:#131a2e;--panel2:#1a2338;--line:#26304a;--text:#e8edf7;--dim:#93a0bd;--accent:#4f7cff;--accent2:#22d3a5;--good:#22c55e;--warn:#f5a524;--bad:#ef4444;}
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;background:radial-gradient(1200px 600px at 20% -10%,#16203c 0,var(--bg) 60%);color:var(--text);min-height:100vh;padding:22px;font-size:14px}
-  .wrap{max-width:1080px;margin:0 auto}
+  .wrap{max-width:1120px;margin:0 auto}
   header{display:flex;align-items:center;gap:13px;margin-bottom:4px;flex-wrap:wrap}
   .logo{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),#2b4bd6);font-weight:800;font-size:17px}
   h1{font-size:19px;font-weight:800;letter-spacing:-.02em}
   .tag{font-size:12px;color:var(--dim)}
-  .sub{color:var(--dim);font-size:12.5px;margin:3px 0 16px}
-  .bar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}
-  input[type=text]{flex:1;min-width:200px;background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:11px 13px;font-size:14px;outline:none}
+  .sub{color:var(--dim);font-size:12.5px;margin:3px 0 14px}
+  .bar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:12px}
+  input[type=text]{flex:1;min-width:200px;background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:10px 13px;font-size:14px;outline:none}
   input[type=text]:focus{border-color:var(--accent)}
-  button{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:11px 18px;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap}
+  button{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-weight:700;font-size:13.5px;cursor:pointer;white-space:nowrap}
   button:hover{filter:brightness(1.08)} button:disabled{opacity:.55;cursor:default}
   button.ghost{background:var(--panel);border:1px solid var(--line);color:var(--text)}
-  .weights{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:14px}
-  .weights h3{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--dim);margin-bottom:10px;font-weight:700}
-  .wrow{display:flex;align-items:center;gap:12px;margin:7px 0}
+  .weights{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:12px}
+  .weights h3{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--dim);margin-bottom:8px;font-weight:700}
+  .wrow{display:flex;align-items:center;gap:12px;margin:6px 0}
   .wrow label{width:100px;font-size:12.5px;color:var(--text)}
   .wrow input[type=range]{flex:1;accent-color:var(--accent)}
-  .wrow .val{width:36px;text-align:right;font-size:12px;color:var(--dim)}
-  .wnote{font-size:11px;color:var(--dim);margin-top:8px}
-  .status{font-size:12.5px;color:var(--dim);margin:10px 2px} .status b{color:var(--accent2)}
+  .wrow .val{width:34px;text-align:right;font-size:12px;color:var(--dim)}
+  .filters{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+  .frow{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .flab{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--dim);width:52px;font-weight:700}
+  .chip{font-size:12px;padding:5px 11px;border-radius:20px;background:var(--panel);border:1px solid var(--line);color:var(--dim);cursor:pointer;user-select:none}
+  .chip:hover{border-color:var(--accent)}
+  .chip.on{background:rgba(79,124,255,.16);border-color:var(--accent);color:#bcd0ff;font-weight:700}
+  .status{font-size:12.5px;color:var(--dim);margin:8px 2px} .status b{color:var(--accent2)}
   .err{color:var(--bad);font-size:12px;margin-top:6px}
   table{width:100%;border-collapse:collapse;margin-top:4px}
-  th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--dim);padding:9px 12px;border-bottom:1px solid var(--line)}
+  th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--dim);padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+  th.sortable{cursor:pointer;user-select:none} th.sortable:hover{color:var(--text)}
+  th .ar{opacity:.5;font-size:9px}
   td{padding:11px 12px;border-bottom:1px solid var(--line);font-size:13.5px;vertical-align:middle}
   tr.row{cursor:pointer} tr.row:hover td{background:var(--panel)}
   .tk{font-weight:800;font-size:15px}
+  .sectag{font-size:9px;text-transform:uppercase;color:var(--dim);margin-left:6px;letter-spacing:.04em}
   .caret{display:inline-block;width:14px;color:var(--dim);transition:transform .15s}
   tr.open .caret{transform:rotate(90deg)}
   .score{font-weight:800;font-size:15px} .comp{font-weight:800;font-size:15px}
@@ -65,39 +73,99 @@
 <body>
 <div class="wrap">
   <header><div class="logo">M</div><div><h1>MomentumScan Pro</h1><div class="tag">Decision-support dashboard · you decide, not a bot</div></div></header>
-  <div class="sub">Click any stock to expand its <b>momentum</b>, <b>analyst</b> and <b>insider</b> panels and a composite score you can re-weight below. A research tool, not a prediction or financial advice.</div>
+  <div class="sub">Your universe is auto-scanned every weekday and opens here pre-scored. Filter by sector or price, sort any column, click a stock for its full picture. Research tool, not advice.</div>
   <div class="bar">
-    <input type="text" id="tickers" placeholder="Tickers e.g. NVDA, AMD  (blank = default; free tier: max 8 at once)">
+    <input type="text" id="tickers" placeholder="Custom live scan: NVDA, AMD …  (free tier: max 8 at once)">
     <button id="scan" onclick="scan()">Scan (live)</button>
-    <button class="ghost" onclick="document.getElementById('tickers').value='';scan()">Default</button>
+    <button class="ghost" onclick="exportCSV()">CSV</button>
   </div>
   <div class="weights">
     <h3>Composite weights — drag to match how you think</h3>
     <div class="wrow"><label>Momentum</label><input type="range" id="w_mom" min="0" max="100" value="50" oninput="onWeights()"><span class="val" id="v_mom">50</span></div>
     <div class="wrow"><label>Insider buying</label><input type="range" id="w_ins" min="0" max="100" value="30" oninput="onWeights()"><span class="val" id="v_ins">30</span></div>
     <div class="wrow"><label>Analyst</label><input type="range" id="w_ana" min="0" max="100" value="20" oninput="onWeights()"><span class="val" id="v_ana">20</span></div>
-    <div class="wnote">The composite blends only these three fresh, defensible signals. A weighted summary to save you tab-switching — not a probability of profit.</div>
+  </div>
+  <div class="filters">
+    <div class="frow"><span class="flab">Sector</span><span id="sector-chips"></span></div>
+    <div class="frow"><span class="flab">Price</span><span id="tier-chips"></span></div>
   </div>
   <div class="status" id="status">Loading your latest saved scan…</div>
   <div id="err" class="err"></div>
-  <table id="tbl" style="display:none"><thead><tr><th style="width:26px"></th><th>Ticker</th><th>Price</th><th>Chg</th><th>Momentum</th><th>Composite</th><th>Signal</th></tr></thead><tbody id="rows"></tbody></table>
-  <div class="foot">Opens with your last saved scan (from the database) instantly. "Scan (live)" refreshes from the market. Analyst + insider load when you expand a stock. Composite is a transparent weighted blend you control — not investment advice.</div>
+  <table id="tbl" style="display:none"><thead><tr>
+    <th style="width:24px"></th>
+    <th class="sortable" onclick="sortBy('ticker')">Ticker<span class="ar" id="ar-ticker"></span></th>
+    <th class="sortable" onclick="sortBy('price')">Price<span class="ar" id="ar-price"></span></th>
+    <th class="sortable" onclick="sortBy('changePct')">Chg<span class="ar" id="ar-changePct"></span></th>
+    <th class="sortable" onclick="sortBy('score')">Momentum<span class="ar" id="ar-score">▼</span></th>
+    <th class="sortable" onclick="sortBy('composite')">Composite<span class="ar" id="ar-composite"></span></th>
+    <th>Signal</th>
+  </tr></thead><tbody id="rows"></tbody></table>
+  <div class="foot">Auto-scanned weekdays via a scheduled job → stored → read here instantly. "Scan (live)" refreshes up to 8 names on demand. CSV exports the current filtered view. Composite = your weighted blend, not a forecast. Not investment advice.</div>
 </div>
 <script>
-const cache={},enrichCache={};
+// ticker -> sector (first theme match wins, else sp)
+const SEC={semi:['NVDA','AMD','AVGO','MU','TSM','ASML','LRCX','AMAT','KLAC','QCOM','ARM','MRVL','TXN','ADI','MCHP','ON','SMCI','INTC'],ai:['PLTR','SNOW','NOW','CRM','MSFT','GOOGL','META','AMZN','PATH','CRWD','DDOG','NET','MDB','ORCL','AI'],power:['VST','CEG','NRG','GEV','OKLO','SMR','NNE','CCJ','TLN','NEE','ETN','PWR','VRT'],space:['RKLB','ASTS','LUNR','RDW','PL','ACHR','JOBY'],quantum:['IONQ','RGTI','QBTS','QUBT','ARQQ'],sp:['AAPL','MSFT','NVDA','AMZN','GOOGL','META','TSLA','BRK.B','JPM','V','UNH','LLY','XOM','WMT','MA','JNJ','PG','HD','COST','ABBV','NFLX','BAC','KO','CVX','MRK','PEP','ADBE','CAT','GS','AXP','DIS']};
+const SECTOR_MAP={}; ['semi','ai','power','space','quantum','sp'].forEach(s=>SEC[s].forEach(t=>{if(!(t in SECTOR_MAP))SECTOR_MAP[t]=s;}));
+const SEC_LABEL={all:'All',sp:'S&P',semi:'Semis',ai:'AI',power:'Power',space:'Space',quantum:'Quantum'};
+const TIER_LABEL={all:'All',u10:'Under $10',u50:'Under $50',u100:'Under $100',big:'$100+'};
+
+let ALL=[]; const enrichCache={};
+let filt={sector:'all',tier:'all'}; let sort={key:'score',dir:'desc'};
+
 function weights(){return{mom:+document.getElementById('w_mom').value,ins:+document.getElementById('w_ins').value,ana:+document.getElementById('w_ana').value};}
-function onWeights(){['mom','ins','ana'].forEach(k=>document.getElementById('v_'+k).textContent=document.getElementById('w_'+k).value);Object.keys(enrichCache).forEach(t=>{if(document.getElementById('comp_'+t))renderComposite(t);});}
-function composite(t){const w=weights();const mom=cache[t]?cache[t].mom:null;const e=enrichCache[t]||{};const ana=e.analyst?e.analyst.score:null,ins=e.insider?e.insider.score:null;let n=0,d=0;if(mom!=null){n+=w.mom*mom;d+=w.mom;}if(ins!=null){n+=w.ins*ins;d+=w.ins;}if(ana!=null){n+=w.ana*ana;d+=w.ana;}return d?Math.round(n/d):mom;}
+function onWeights(){['mom','ins','ana'].forEach(k=>document.getElementById('v_'+k).textContent=document.getElementById('w_'+k).value);applyView();}
+function composite(r){const w=weights();const e=enrichCache[r.ticker]||{};const ana=e.analyst?e.analyst.score:null,ins=e.insider?e.insider.score:null;let n=w.mom*r.score,d=w.mom;if(ins!=null){n+=w.ins*ins;d+=w.ins;}if(ana!=null){n+=w.ana*ana;d+=w.ana;}return d?Math.round(n/d):r.score;}
 const scoreColor=s=>s>=70?'#5fe08a':s>=50?'#f6be5c':'#f78d8d';
 function compBadge(v){return v==null?'<span style="color:var(--dim)">—</span>':'<span class="comp" style="color:'+scoreColor(v)+'">'+v+'</span>';}
-async function loadCached(){try{const r=await fetch('/api/latest');const d=await r.json();if(d.results&&d.results.length){render(d.results);document.getElementById('status').innerHTML='<b>'+d.results.length+'</b> stocks · saved '+(d.asOf||'')+' · click one to expand, or Scan for live';}else{document.getElementById('status').textContent='No saved scan yet — hit Scan (live) to run your first.';}}catch(e){document.getElementById('status').textContent='Hit Scan (live) to begin.';}}
-async function scan(){const btn=document.getElementById('scan'),st=document.getElementById('status'),err=document.getElementById('err');err.textContent='';btn.disabled=true;btn.textContent='Scanning…';st.textContent='Fetching live momentum + technicals…';const raw=document.getElementById('tickers').value.trim();const tickers=raw?raw.split(/[\s,]+/).filter(Boolean):undefined;try{const r=await fetch('/api/scan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(tickers?{tickers}:{})});if(!r.ok)throw new Error('scan API '+r.status);const d=await r.json();render(d.results||[]);const saved=d.snapshot&&d.snapshot.saved?' · saved':'';st.innerHTML='<b>'+(d.results||[]).length+'</b> scored live · '+new Date(d.asOf).toLocaleTimeString()+saved+' · click a stock to expand';if(d.errors&&d.errors.length)err.textContent='Skipped (rate limit): '+d.errors.map(e=>e.ticker).join(', ')+' — free tier allows 8/min.';}catch(e){st.textContent='Scan failed.';err.textContent=e.message;}btn.disabled=false;btn.textContent='Scan (live)';}
-function render(rows){const tbl=document.getElementById('tbl'),body=document.getElementById('rows');if(!rows.length){tbl.style.display='none';return;}tbl.style.display='';body.innerHTML='';rows.forEach(function(r){cache[r.ticker]={mom:r.score,price:r.price,chg:r.changePct,signal:r.signal,rsi:r.rsi,entry:r.entry,target:r.target,stop:r.stop,pillars:r.pillars};const chg=r.changePct==null?'—':(r.changePct>=0?'+':'')+r.changePct+'%';const chgCol=r.changePct>0?'#5fe08a':r.changePct<0?'#f78d8d':'var(--dim)';const tr=document.createElement('tr');tr.className='row';tr.id='row_'+r.ticker;tr.onclick=function(){toggle(r.ticker);};tr.innerHTML='<td><span class="caret">▶</span></td><td><span class="tk">'+r.ticker+'</span></td><td>$'+(r.price==null?'—':r.price)+'</td><td style="color:'+chgCol+'">'+chg+'</td><td><span class="score" style="color:'+scoreColor(r.score)+'">'+r.score+'</span></td><td id="cell_'+r.ticker+'">'+compBadge(r.score)+'</td><td><span class="pill sg-'+r.signal+'">'+r.signal+'</span></td>';body.appendChild(tr);const dt=document.createElement('tr');dt.className='detail';dt.id='detail_'+r.ticker;dt.style.display='none';dt.innerHTML='<td colspan="7"><div id="panels_'+r.ticker+'" class="loading">…</div></td>';body.appendChild(dt);});}
-async function toggle(t){const row=document.getElementById('row_'+t),det=document.getElementById('detail_'+t);if(det.style.display!=='none'){det.style.display='none';row.classList.remove('open');return;}det.style.display='';row.classList.add('open');if(!enrichCache[t]){document.getElementById('panels_'+t).innerHTML='<div class="loading">Loading analyst & insider data…</div>';try{const r=await fetch('/api/enrich?ticker='+encodeURIComponent(t));enrichCache[t]=await r.json();}catch(e){enrichCache[t]={error:e.message};}}renderPanels(t);const cell=document.getElementById('cell_'+t);if(cell)cell.innerHTML=compBadge(composite(t));}
+function tierOf(p){if(p==null)return null;if(p<10)return'u10';if(p<50)return'u50';if(p<100)return'u100';return'big';}
+
+function buildChips(){
+  document.getElementById('sector-chips').innerHTML=Object.keys(SEC_LABEL).map(k=>'<span class="chip'+(filt.sector===k?' on':'')+'" onclick="setSector(\''+k+'\')">'+SEC_LABEL[k]+'</span>').join('');
+  document.getElementById('tier-chips').innerHTML=Object.keys(TIER_LABEL).map(k=>'<span class="chip'+(filt.tier===k?' on':'')+'" onclick="setTier(\''+k+'\')">'+TIER_LABEL[k]+'</span>').join('');
+}
+function setSector(k){filt.sector=k;buildChips();applyView();}
+function setTier(k){filt.tier=k;buildChips();applyView();}
+function sortBy(key){if(sort.key===key)sort.dir=sort.dir==='desc'?'asc':'desc';else{sort.key=key;sort.dir=key==='ticker'?'asc':'desc';}applyView();}
+
+function currentView(){
+  let v=ALL.filter(r=>{
+    const secOK=filt.sector==='all'||SECTOR_MAP[r.ticker]===filt.sector;
+    const tierOK=filt.tier==='all'||tierOf(r.price)===filt.tier;
+    return secOK&&tierOK;
+  });
+  v.forEach(r=>r._comp=composite(r));
+  const k=sort.key,dir=sort.dir==='asc'?1:-1;
+  v.sort((a,b)=>{let x=k==='composite'?a._comp:a[k],y=k==='composite'?b._comp:b[k];if(k==='ticker'){return dir*String(x).localeCompare(String(y));}return dir*((x??-1e9)-(y??-1e9));});
+  return v;
+}
+function applyView(){
+  const v=currentView();
+  ['ticker','price','changePct','score','composite'].forEach(k=>{const el=document.getElementById('ar-'+k);if(el)el.textContent=sort.key===k?(sort.dir==='desc'?'▼':'▲'):'';});
+  const body=document.getElementById('rows'),tbl=document.getElementById('tbl');
+  if(!v.length){tbl.style.display='none';return;}tbl.style.display='';
+  body.innerHTML='';
+  v.forEach(function(r){
+    const chg=r.changePct==null?'—':(r.changePct>=0?'+':'')+r.changePct+'%';
+    const chgCol=r.changePct>0?'#5fe08a':r.changePct<0?'#f78d8d':'var(--dim)';
+    const sec=SECTOR_MAP[r.ticker]||'';
+    const tr=document.createElement('tr');tr.className='row';tr.id='row_'+r.ticker;tr.onclick=function(){toggle(r.ticker);};
+    tr.innerHTML='<td><span class="caret">▶</span></td><td><span class="tk">'+r.ticker+'</span><span class="sectag">'+(SEC_LABEL[sec]||'')+'</span></td><td>$'+(r.price==null?'—':r.price)+'</td><td style="color:'+chgCol+'">'+chg+'</td><td><span class="score" style="color:'+scoreColor(r.score)+'">'+r.score+'</span></td><td id="cell_'+r.ticker+'">'+compBadge(r._comp)+'</td><td><span class="pill sg-'+r.signal+'">'+r.signal+'</span></td>';
+    body.appendChild(tr);
+    const dt=document.createElement('tr');dt.className='detail';dt.id='detail_'+r.ticker;dt.style.display='none';dt.innerHTML='<td colspan="7"><div id="panels_'+r.ticker+'" class="loading">…</div></td>';body.appendChild(dt);
+  });
+}
+
+async function loadCached(){try{const r=await fetch('/api/latest');const d=await r.json();if(d.results&&d.results.length){ALL=d.results;document.getElementById('status').innerHTML='<b>'+d.results.length+'</b> stocks · saved '+(d.asOf||'')+' · filter, sort, or click a row';applyView();}else{document.getElementById('status').textContent='No saved scan yet — hit Scan (live) or wait for the daily job.';}}catch(e){document.getElementById('status').textContent='Hit Scan (live) to begin.';}}
+
+async function scan(){const btn=document.getElementById('scan'),st=document.getElementById('status'),err=document.getElementById('err');err.textContent='';btn.disabled=true;btn.textContent='Scanning…';st.textContent='Fetching live…';const raw=document.getElementById('tickers').value.trim();const tickers=raw?raw.split(/[\s,]+/).filter(Boolean):undefined;try{const r=await fetch('/api/scan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(tickers?{tickers}:{})});if(!r.ok)throw new Error('scan API '+r.status);const d=await r.json();const map={};ALL.forEach(x=>map[x.ticker]=x);(d.results||[]).forEach(x=>map[x.ticker]=x);ALL=Object.values(map);st.innerHTML='<b>'+(d.results||[]).length+'</b> refreshed live · '+new Date(d.asOf).toLocaleTimeString()+' · merged into your list';applyView();if(d.errors&&d.errors.length)err.textContent='Skipped (8/min limit): '+d.errors.map(e=>e.ticker).join(', ');}catch(e){st.textContent='Scan failed.';err.textContent=e.message;}btn.disabled=false;btn.textContent='Scan (live)';}
+
+function exportCSV(){const v=currentView();if(!v.length)return;const cols=['ticker','sector','price','changePct','score','composite','signal','rsi','entry','target','stop'];const head=cols.join(',');const lines=v.map(r=>[r.ticker,SECTOR_MAP[r.ticker]||'',r.price,r.changePct,r.score,r._comp,r.signal,r.rsi,r.entry,r.target,r.stop].join(','));const csv=head+'\n'+lines.join('\n');const blob=new Blob([csv],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='momentum_'+(new Date().toISOString().slice(0,10))+'.csv';a.click();}
+
+async function toggle(t){const row=document.getElementById('row_'+t),det=document.getElementById('detail_'+t);if(det.style.display!=='none'){det.style.display='none';row.classList.remove('open');return;}det.style.display='';row.classList.add('open');if(!enrichCache[t]){document.getElementById('panels_'+t).innerHTML='<div class="loading">Loading analyst & insider data…</div>';try{const r=await fetch('/api/enrich?ticker='+encodeURIComponent(t));enrichCache[t]=await r.json();}catch(e){enrichCache[t]={error:e.message};}}renderPanels(t);const cell=document.getElementById('cell_'+t);if(cell){const r=ALL.find(x=>x.ticker===t);cell.innerHTML=compBadge(composite(r));}}
 function bar(label,val,color){const v=val==null?0:val;return '<div class="barrow"><span class="lab">'+label+'</span><span class="track"><span class="fill" style="width:'+v+'%;background:'+color+'"></span></span><b>'+(val==null?'—':val)+'</b></div>';}
-function renderPanels(t){const c=cache[t],e=enrichCache[t]||{};const el=document.getElementById('panels_'+t);if(e.error){el.className='';el.innerHTML='<div class="loading">Could not load extra data: '+e.error+'</div>';return;}const a=e.analyst,ins=e.insider;let momPanel='<div class="card"><h4>Momentum / Technical <span class="fresh hot">live</span></h4><div class="bigscore" style="color:'+scoreColor(c.mom)+'">'+c.mom+'</div><div class="kv" style="margin-top:8px">RSI <b>'+(c.rsi==null?'—':c.rsi)+'</b> · signal <b>'+c.signal+'</b></div><div class="kv">Entry <b>$'+(c.entry==null?'—':c.entry)+'</b> · Target <b>$'+(c.target==null?'—':c.target)+'</b> · Stop <b>$'+(c.stop==null?'—':c.stop)+'</b></div>'+(c.pillars?bar('Trend',c.pillars.trend,'#4f7cff')+bar('Volume',c.pillars.volume,'#f5a524')+bar('Position',c.pillars.position,'#a78bfa'):'')+'</div>';let insPanel;if(ins){let notable=(ins.notable||[]).map(function(n){return '<div class="ins"><span class="'+(n.code==='P'?'buy':'sell')+'">'+(n.code==='P'?'BUY':'SELL')+' '+(n.name||'insider')+'</span><span>'+(n.shares||0).toLocaleString()+' sh · '+(n.date||'')+'</span></div>';}).join('')||'<div class="kv">No open-market trades in 90d</div>';insPanel='<div class="card"><h4>Insider buying <span class="fresh hot">~2-day</span></h4><div class="bigscore" style="color:'+scoreColor(ins.score)+'">'+ins.score+'</div><div class="kv" style="margin-top:8px"><span class="buy">'+ins.buys+' buys</span> · <span class="sell">'+ins.sells+' sells</span> (90d)</div>'+notable+'</div>';}else insPanel='<div class="card"><h4>Insider buying</h4><div class="kv">No data (needs Finnhub key)</div></div>';let anaPanel;if(a){anaPanel='<div class="card"><h4>Analyst consensus <span class="fresh ctx">context</span></h4><div class="bigscore" style="color:'+scoreColor(a.score)+'">'+a.score+'</div><div class="kv" style="margin-top:8px">'+a.total+' analysts · '+(a.period||'')+'</div>'+bar('Strong buy',Math.round(a.strongBuy/a.total*100),'#22c55e')+bar('Buy',Math.round(a.buy/a.total*100),'#5fe08a')+bar('Hold',Math.round(a.hold/a.total*100),'#f5a524')+bar('Sell',Math.round((a.sell+a.strongSell)/a.total*100),'#ef4444')+'</div>';}else anaPanel='<div class="card"><h4>Analyst consensus</h4><div class="kv">No data (needs Finnhub key)</div></div>';el.className='';el.innerHTML='<div class="panels">'+momPanel+insPanel+anaPanel+'<div class="compbar"><span class="n" id="comp_'+t+'" style="color:'+scoreColor(composite(t))+'">'+composite(t)+'</span><span class="expl">Composite with your current weights (Momentum '+weights().mom+' · Insider '+weights().ins+' · Analyst '+weights().ana+'). Drag the sliders above to change it. A summary you control, not a forecast.</span></div></div>';}
-function renderComposite(t){const el=document.getElementById('comp_'+t);if(!el)return;const v=composite(t);el.textContent=v;el.style.color=scoreColor(v);const cell=document.getElementById('cell_'+t);if(cell)cell.innerHTML=compBadge(v);}
-loadCached();
+function renderPanels(t){const c=ALL.find(x=>x.ticker===t)||{},e=enrichCache[t]||{};const el=document.getElementById('panels_'+t);if(e.error){el.className='';el.innerHTML='<div class="loading">Could not load extra data: '+e.error+'</div>';return;}const a=e.analyst,ins=e.insider;const p=c.pillars||{};let momPanel='<div class="card"><h4>Momentum / Technical <span class="fresh hot">daily</span></h4><div class="bigscore" style="color:'+scoreColor(c.score)+'">'+c.score+'</div><div class="kv" style="margin-top:8px">RSI <b>'+(c.rsi==null?'—':c.rsi)+'</b> · signal <b>'+c.signal+'</b></div><div class="kv">Entry <b>$'+(c.entry==null?'—':c.entry)+'</b> · Target <b>$'+(c.target==null?'—':c.target)+'</b> · Stop <b>$'+(c.stop==null?'—':c.stop)+'</b></div>'+bar('Trend',p.trend,'#4f7cff')+bar('Volume',p.volume,'#f5a524')+bar('Position',p.position,'#a78bfa')+'</div>';let insPanel;if(ins){let notable=(ins.notable||[]).map(function(n){return '<div class="ins"><span class="'+(n.code==='P'?'buy':'sell')+'">'+(n.code==='P'?'BUY':'SELL')+' '+(n.name||'insider')+'</span><span>'+(n.shares||0).toLocaleString()+' sh</span></div>';}).join('')||'<div class="kv">No open-market trades in 90d</div>';insPanel='<div class="card"><h4>Insider buying <span class="fresh hot">~2-day</span></h4><div class="bigscore" style="color:'+scoreColor(ins.score)+'">'+ins.score+'</div><div class="kv" style="margin-top:8px"><span class="buy">'+ins.buys+' buys</span> · <span class="sell">'+ins.sells+' sells</span> (90d)</div>'+notable+'</div>';}else insPanel='<div class="card"><h4>Insider buying</h4><div class="kv">Needs Finnhub key</div></div>';let anaPanel;if(a){anaPanel='<div class="card"><h4>Analyst consensus <span class="fresh ctx">context</span></h4><div class="bigscore" style="color:'+scoreColor(a.score)+'">'+a.score+'</div><div class="kv" style="margin-top:8px">'+a.total+' analysts</div>'+bar('Strong buy',Math.round(a.strongBuy/a.total*100),'#22c55e')+bar('Buy',Math.round(a.buy/a.total*100),'#5fe08a')+bar('Hold',Math.round(a.hold/a.total*100),'#f5a524')+bar('Sell',Math.round((a.sell+a.strongSell)/a.total*100),'#ef4444')+'</div>';}else anaPanel='<div class="card"><h4>Analyst consensus</h4><div class="kv">Needs Finnhub key</div></div>';el.className='';el.innerHTML='<div class="panels">'+momPanel+insPanel+anaPanel+'<div class="compbar"><span class="n" style="color:'+scoreColor(composite(c))+'">'+composite(c)+'</span><span class="expl">Composite with your weights (Momentum '+weights().mom+' · Insider '+weights().ins+' · Analyst '+weights().ana+'). A summary you control, not a forecast.</span></div></div>';}
+
+buildChips(); loadCached();
 </script>
 </body>
 </html>
